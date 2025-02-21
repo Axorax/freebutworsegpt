@@ -1,0 +1,442 @@
+@font-face {
+  font-family: 'default';
+  src: url('./funnel.woff2');
+}
+
+@font-face {
+  font-family: 'mono';
+  src: url('./space.woff2');
+}
+
+:root {
+  color-scheme: dark;
+  --background: #181818;
+  --foreground: #212121;
+  --border: #3d3d3d;
+  --primary: #f9cb43;
+  --blur-radius: 5px;
+  --width: 40rem;
+  --chat-bottom-margin: 11rem;
+  --chat-top-margin: 3rem;
+  --overlay-height: 0rem;
+  --spinner-size: 16px;
+}
+
+*,
+*::before,
+*::after {
+  font-family: 'default', sans-serif;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+a {
+  color: var(--primary);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: double underline;
+  }
+}
+
+body {
+  background: var(--background);
+  height: 100dvh;
+  max-height: 100dvh;
+  background-color: #181818;
+}
+
+.pattern {
+  background-image: radial-gradient(#5c5c5c 0.5px, transparent 0.5px), radial-gradient(#5c5c5c 0.5px, #181818 0.5px);
+  background-size: 20px 20px;
+  background-position:
+    0 0,
+    10px 10px;
+
+  &.blur {
+    background-image: radial-gradient(#5c5c5cc1 0.5px, transparent 0.5px), radial-gradient(#5c5c5cc1 0.5px, #181818c1 0.5px);
+  }
+
+  &.type-2 {
+    background-image:
+      linear-gradient(30deg, #262626 12%, transparent 12.5%, transparent 87%, #262626 87.5%, #262626), linear-gradient(150deg, #262626 12%, transparent 12.5%, transparent 87%, #262626 87.5%, #262626), linear-gradient(30deg, #262626 12%, transparent 12.5%, transparent 87%, #262626 87.5%, #262626), linear-gradient(150deg, #262626 12%, transparent 12.5%, transparent 87%, #262626 87.5%, #262626),
+      linear-gradient(60deg, #26262677 25%, transparent 25.5%, transparent 75%, #26262677 75%, #26262677), linear-gradient(60deg, #26262677 25%, transparent 25.5%, transparent 75%, #26262677 75%, #26262677);
+    background-size: 20px 35px;
+    background-position:
+      0 0,
+      0 0,
+      10px 18px,
+      10px 18px,
+      0 0,
+      10px 18px;
+  }
+}
+
+nav {
+  padding: 1.2rem;
+  font-size: 1.1rem;
+  user-select: none;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  backdrop-filter: blur(var(--blur-radius));
+  z-index: 2;
+  color: #ffffffcd;
+}
+
+main {
+  display: flex;
+  justify-content: center;
+
+  .chat {
+    width: var(--width);
+    max-width: calc(100% - 2rem);
+    display: flex;
+    flex-direction: column;
+    margin-bottom: var(--chat-bottom-margin);
+    margin-top: var(--chat-top-margin);
+
+    .user {
+      margin-left: auto;
+      color: #ffffffe7;
+      max-width: 25rem;
+      padding: 0.8rem 1rem;
+    }
+
+    .user,
+    .ai {
+      border-radius: 0.5rem;
+      padding: 1rem;
+      background: var(--foreground);
+      width: max-content;
+      margin-top: 1rem;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+      display: inline-block;
+
+      &.hidden {
+        display: none;
+      }
+    }
+
+    .ai {
+      max-width: calc(var(--width) - 5rem);
+    }
+  }
+}
+
+footer {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+
+  & > div {
+    width: var(--width);
+    max-width: calc(100dvw - 2rem);
+    display: flex;
+    flex-direction: column;
+  }
+
+  a {
+    color: inherit;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+
+  textarea {
+    width: 100%;
+    font-size: 1.05rem;
+    padding: 1rem;
+    border: none;
+    outline: none;
+    background: var(--foreground);
+    resize: none;
+    field-sizing: content;
+    max-height: 10rem;
+    border-radius: 1rem;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border: 1px solid var(--border);
+    transition: 300ms ease;
+  }
+
+  .actions {
+    border: 1px solid var(--border);
+    border-top: none;
+    width: 100%;
+    background: var(--foreground);
+    padding: 0.8rem 1rem;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #ffffff8f;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .extra {
+    border: 1px solid var(--border);
+    border-top: none;
+    width: 100%;
+    background: var(--foreground);
+    padding: 0.6rem 1rem;
+    color: #ffffff8f;
+    cursor: default;
+    font-size: 0.9rem;
+    user-select: none;
+    display: none;
+    opacity: 0;
+    transition: 300ms ease;
+    transform: translateY(100%);
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  button {
+    color: inherit;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1rem;
+    transition: color 300ms ease;
+
+    svg {
+      width: 20px;
+      aspect-ratio: 1/1;
+    }
+
+    &:hover {
+      color: var(--primary);
+    }
+  }
+}
+
+.overlay {
+  position: fixed;
+  z-index: 1;
+  bottom: 0;
+  width: 100%;
+  height: var(--overlay-height);
+  backdrop-filter: blur(var(--blur-radius));
+}
+
+@media screen and (max-width: 550px) {
+  .ai {
+    max-width: calc(100dvw - 2rem) !important;
+  }
+}
+
+/* Loader */
+
+.loader {
+  width: var(--spinner-size);
+  aspect-ratio: 1/1;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  animation: rotate 1s linear infinite;
+}
+
+.loader::after {
+  content: '';
+  box-sizing: border-box;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: calc(var(--spinner-size) - 8px);
+  aspect-ratio: 1/1;
+  border-radius: 50%;
+  border: 2px solid;
+  border-color: var(--primary) transparent;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Chat markdown */
+
+pre {
+  background: #262626;
+  border: 1px solid var(--border);
+  padding: 1rem;
+  border-radius: 0.6rem;
+  overflow-y: auto;
+
+  code,
+  span {
+    font-family: 'mono', monospace !important;
+  }
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 1rem 0;
+  border-radius: 9rem;
+}
+
+ul,
+ol {
+  margin: -1rem 0;
+  margin-left: 2rem;
+}
+
+table {
+  width: 100%;
+  min-width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  background: var(--foreground);
+  color: #ffffffcd;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+th,
+td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+th {
+  background: #292929;
+  font-weight: bold;
+}
+
+tbody tr {
+  transition: background 300ms ease;
+}
+
+tbody tr:hover {
+  background: #272727;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.visualizer {
+  margin: 1rem 0 0 0;
+  background: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  width: 100%;
+  padding: 1rem;
+  overflow-x: auto;
+}
+
+.visual-mermaid {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Syntax highlight (Atom-one theme modified by Axorax) */
+
+.hljs {
+  color: #ffffffe9;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #5c6370;
+  font-style: italic;
+}
+
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+  color: #cb76e4;
+}
+
+.hljs-section,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+  color: #e05460;
+}
+
+.hljs-literal {
+  color: #57bdcb;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta .hljs-string {
+  color: #a0d07d;
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+  color: #d99f69;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+  color: #61aeee;
+}
+
+.hljs-built_in,
+.hljs-title.class_,
+.hljs-class .hljs-title {
+  color: #e6c07b;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-link {
+  text-decoration: underline;
+}

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Use AI (for free) without having to login. FreeButWorseGPT offers an easy, no-login way to experience AI chat." />
+    <meta name="keywords" content="FreeButWorseGPT, free AI, no login, AI chat, AI chatbot, AI tool, free chatbot" />
+    <meta name="author" content="Axorax" />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:title" content="FreeButWorseGPT" />
+    <meta property="og:description" content="Use AI (for free) without having to login." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://axorax.github.io/freebutworsegpt" />
+    <meta property="og:site_name" content="FreeButWorseGPT" />
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:title" content="FreeButWorseGPT" />
+    <meta property="twitter:description" content="Use AI (for free) without having to login." />
+    <title>FreeButWorseGPT</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="./dep.js" defer></script>
+    <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11.4.1/+esm';
+      mermaid.initialize({
+        securityLevel: 'loose',
+        startOnLoad: true,
+      });
+
+      window.mermaid = async () => {
+        await mermaid.run({
+          nodes: document.querySelectorAll('.visual-mermaid'),
+        });
+      };
+    </script>
+    <script src="./script.js" defer></script>
+    <link rel="shortcut icon" href="./freebutworsegpt.svg" type="image/x-icon" />
+  </head>
+  <body class="pattern">
+    <nav class="pattern blur"><b>Free</b>ButWorseGPT</nav>
+
+    <main>
+      <div class="chat">
+        <!-- prettier-ignore -->
+        <div class="ai landing">Welcome to <b>Free</b>ButWorseGPT!<br /><br />Every message is treated as a new chat instance. So, the AI won't have context from previous messages.<br /><br /><h3>Donate</h3><hr>Developer: <a target="_blank" href="https://patreon.com/axorax">https://patreon.com/<b>axorax</b></a><br /><br />API Provider: <a target="_blank" href="https://buymeacoffee.com/vinay_dev">https://buymeacoffee.com/vinay_dev</a></div>
+      </div>
+    </main>
+
+    <footer>
+      <div>
+        <textarea placeholder="Type your message here"></textarea>
+        <div class="extra">
+          <span class="loader"></span>
+          <p>Calling AI...</p>
+        </div>
+        <div class="actions">
+          <a href="https://youtube.com/@axorax" target="_blank"><button>YouTube</button></a>
+          •
+          <button onclick="clearHistory()">Clear history</button>
+        </div>
+      </div>
+    </footer>
+
+    <div class="overlay pattern blur"></div>
+  </body>
+</html>
